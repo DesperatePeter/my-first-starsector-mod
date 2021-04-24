@@ -26,7 +26,7 @@ object Variables {
 val starsectorCoreDirectory = "${Variables.starsectorDirectory}"
 val starsectorModDirectory = "${Variables.starsectorDirectory}/mods"
 val modFolder = File("$starsectorModDirectory/${Variables.modName}")
-val modFiles = listOf("mod_info.json", "${Variables.modId}.version", "jars", "LICENSE")
+val modFiles = listOf("mod_info.json", "${Variables.modId}.version", "jars", "LICENSE", "data")
 
 plugins {
     kotlin("jvm") version "1.3.60"
@@ -47,7 +47,7 @@ dependencies {
     compileOnly("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersionInLazyLib")
     compileOnly("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersionInLazyLib")
 
-    compileOnly(fileTree("$starsectorModDirectory/LazyLib/jars") { include("*.jar") })
+    implementation(fileTree("$starsectorModDirectory/LazyLib/jars") { include("*.jar") })
     //compileOnly(fileTree("$starsectorModDirectory/Console Commands/jars") { include("*.jar") })
 
     // Starsector jars and dependencies
