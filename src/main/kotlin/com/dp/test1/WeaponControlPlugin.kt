@@ -11,13 +11,23 @@ public class WeaponControlPlugin : BaseEveryFrameCombatPlugin(){
 
         val playerShip = engine.playerShip ?: return
         val combatUI = engine.combatUI ?: return
-        val weaponGroups = playerShip.
+        val weaponGroups = playerShip.weaponGroupsCopy
 
         keyManager.parseInputEvents(events)
+
+        when (keyManager.mkeyStatus.mcontrolEvent){
+            ControlEventType.COMBINE -> combineWeaponGroup()
+            ControlEventType.CYCLE -> cycleWeaponGroupMode()
+            else -> println("Nothing to do")
+        }
 
 
 
     }
+
+    private fun cycleWeaponGroupMode(): Nothing = TODO()
+
+    private fun combineWeaponGroup(): Nothing = TODO()
 
     override fun init(engine: CombatEngineAPI?) {
         super.init(engine)

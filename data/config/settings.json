@@ -1,0 +1,5 @@
+{
+  "plugins":{
+    "WeaponControlPlugin":"com.dp.test1.WeaponControlPlugin"
+  }
+}

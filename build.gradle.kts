@@ -14,7 +14,7 @@ object Variables {
     const val description = "Just a test."
     val gameVersion = "0.95a-RC14"
     val jars = arrayOf("jars/$jarFileName")
-    val modPlugin = "com.dp.test1.LifecyclePlugin"
+    val modPlugin = "com.dp.test1.WeaponControlBasePlugin"
     val isUtilityMod = false
     val masterVersionFile = "https://raw.githubusercontent.com/githubname/githubrepo/master/$modId.version"
     val modThreadId = "70739"
@@ -26,7 +26,7 @@ object Variables {
 val starsectorCoreDirectory = "${Variables.starsectorDirectory}"
 val starsectorModDirectory = "${Variables.starsectorDirectory}/mods"
 val modFolder = File("$starsectorModDirectory/${Variables.modName}")
-val modFiles = listOf("mod_info.json", "${Variables.modId}.version", "jars", "LICENSE", "hotkeys.json")
+val modFiles = listOf("mod_info.json", "${Variables.modId}.version", "jars", "LICENSE")
 
 plugins {
     kotlin("jvm") version "1.3.60"
