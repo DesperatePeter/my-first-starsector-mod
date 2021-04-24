@@ -4,27 +4,29 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 // VARIABLES TO CHANGE
 
 object Variables {
-    val starsectorDirectory = "C:/Program Files (x86)/Fractal Softworks/Starsector"
-    val modVersion = "1.0.0"
-    val jarFileName = "My_Mod.jar"
+    val starsectorDirectory = "/home/jannes/software/starsector"
+    val modVersion = "0.0.1"
+    val jarFileName = "test.jar"
 
-    val modId = "yourName_uniqueid"
-    val modName = "My Mod"
-    val author = "Your Name"
-    val description = "Mod description."
-    val gameVersion = "0.95a-RC12"
+    val modId = "test_dbeaa06e-cfb3-4947-883f-1461bb41e0ac"
+    val modName = "Test"
+    val author = "DesperatePeter"
+    const val description = "Just a test."
+    val gameVersion = "0.95a-RC14"
     val jars = arrayOf("jars/$jarFileName")
-    val modPlugin = "com.example.template.LifecyclePlugin"
+    val modPlugin = "com.dp.test1.LifecyclePlugin"
     val isUtilityMod = false
     val masterVersionFile = "https://raw.githubusercontent.com/githubname/githubrepo/master/$modId.version"
-    val modThreadId = "00000"
+    val modThreadId = "70739"
 // Scroll down and change the "dependencies" part of mod_info.json, if needed
 // LazyLib is needed to use Kotlin, as it provides the Kotlin Runtime
 }
 /////////////////
 
-val starsectorCoreDirectory = "${Variables.starsectorDirectory}/starsector-core"
+val starsectorCoreDirectory = "${Variables.starsectorDirectory}"
 val starsectorModDirectory = "${Variables.starsectorDirectory}/mods"
+val modFolder = File("$starsectorModDirectory/${Variables.modName}")
+val modFiles = listOf("mod_info.json", "${Variables.modId}.version", "jars", "LICENSE", "hotkeys.json")
 
 plugins {
     kotlin("jvm") version "1.3.60"
@@ -89,8 +91,8 @@ tasks {
 
         commandLine = if (System.getProperty("os.name").toLowerCase().contains("windows")) {
             listOf("cmd", "/C", "starsector.bat")
-        } else {
-            listOf("./starsector.bat")
+        } else{
+            listOf("./starsector.sh")
         }
     }
 
@@ -139,6 +141,13 @@ tasks {
                     }
                 """.trimIndent()
             )
+    }
+
+    register("install-mod") {
+        println("Installing mod into Starsector mod folder...")
+        println(System.getProperty("os.name").toLowerCase().contains("linux"))
+        modFolder.mkdir()
+        modFiles.iterator().forEach { File(projectDir, it).copyRecursively(File(modFolder, it), overwrite = true) }
     }
 }
 

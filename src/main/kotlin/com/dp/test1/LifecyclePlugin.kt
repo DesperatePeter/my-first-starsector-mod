@@ -1,4 +1,4 @@
-package com.example.template
+package com.dp.test1
 
 import com.fs.starfarer.api.BaseModPlugin
 import com.thoughtworks.xstream.XStream
