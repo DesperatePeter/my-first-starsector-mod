@@ -8,9 +8,7 @@ import com.fs.starfarer.launcher.ModManager
 
 import org.lwjgl.util.vector.Vector2f
 
-enum class FireMode {
-    DEFAULT, PD, MISSILE, FIGHTER
-}
+
 
 class PdAiPlugin constructor(
     private var assignedWeapon: WeaponAPI, baseAI: AutofireAIPlugin =

@@ -1,10 +1,6 @@
 package com.dp.test1
 
-val weaponGroupKeys = '1'..'7'
 
-enum class ControlEventType {
-    CYCLE, COMBINE, NONE
-}
 
 class KeyStatus() {
     var mcontrolEvent: ControlEventType = ControlEventType.NONE

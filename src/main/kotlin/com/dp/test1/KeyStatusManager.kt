@@ -4,6 +4,7 @@ import com.fs.starfarer.api.input.InputEventAPI
 
 class KeyStatusManager {
     var mkeyStatus = KeyStatus()
+    private val weaponGroupKeys = '1'..'7'
 
     /**
      * @return true if event relevant
