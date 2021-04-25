@@ -9,6 +9,6 @@ public class WeaponControlBasePlugin : BaseModPlugin(){
 
     override fun onApplicationLoad() {
         super.onApplicationLoad()
-        // println("Successfully launched BaseModPlugin")
+        // Note: In the future, reading a setting file might go here
     }
 }

@@ -1,4 +1,5 @@
 package com.dp.test1
+
 import com.fs.starfarer.api.combat.AutofireAIPlugin
 import com.fs.starfarer.api.combat.MissileAPI
 import com.fs.starfarer.api.combat.ShipAPI
@@ -7,39 +8,64 @@ import com.fs.starfarer.launcher.ModManager
 
 import org.lwjgl.util.vector.Vector2f
 
-class PdAiPlugin constructor(var assignedWeapon : WeaponAPI, var baseAI : AutofireAIPlugin =
-                                 ModManager.getInstance().pickWeaponAIPlugin(assignedWeapon))
-    : AutofireAIPlugin{
-    var mbaseAI = ModManager.getInstance().pickWeaponAIPlugin(assignedWeapon)
+enum class FireMode {
+    DEFAULT, PD, MISSILE, FIGHTER
+}
+
+class PdAiPlugin constructor(
+    private var assignedWeapon: WeaponAPI, baseAI: AutofireAIPlugin =
+        ModManager.getInstance().pickWeaponAIPlugin(assignedWeapon)
+) : AutofireAIPlugin {
+    private var baseAI = baseAI
+    var fireMode = FireMode.DEFAULT
 
     override fun advance(p0: Float) {
-        return mbaseAI.advance(p0)
+        return baseAI.advance(p0)
     }
 
-    override fun shouldFire(): Boolean {
-        if(!mbaseAI.shouldFire()) return false
+    private fun shouldFireInPdMode(): Boolean {
         if (null != targetMissile) return true
-        if(null != targetShip && targetShip!!.isFighter) return true
+        if (null != targetShip && targetShip!!.isFighter) return true
         return false
     }
 
+    private fun shouldFireInMissileMode(): Boolean {
+        if (null != targetMissile) return true
+        return false
+    }
+
+    private fun shouldFireInFighterMode(): Boolean {
+        if (null != targetShip && targetShip!!.isFighter) return true
+        return false
+    }
+
+    override fun shouldFire(): Boolean {
+        if (!baseAI.shouldFire()) return false
+        return when (fireMode) {
+            FireMode.DEFAULT -> baseAI.shouldFire()
+            FireMode.PD -> shouldFireInPdMode()
+            FireMode.MISSILE -> shouldFireInMissileMode()
+            FireMode.FIGHTER -> shouldFireInFighterMode()
+        }
+    }
+
     override fun forceOff() {
-        return mbaseAI.forceOff()
+        return baseAI.forceOff()
     }
 
     override fun getTarget(): Vector2f? {
-        return mbaseAI.target
+        return baseAI.target
     }
 
     override fun getTargetShip(): ShipAPI? {
-        return mbaseAI.targetShip
+        return baseAI.targetShip
     }
 
     override fun getWeapon(): WeaponAPI? {
-        return mbaseAI.weapon
+        return baseAI.weapon
     }
 
     override fun getTargetMissile(): MissileAPI? {
-        return mbaseAI.targetMissile
+        return baseAI.targetMissile
     }
 }
